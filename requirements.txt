@@ -1,0 +1,13 @@
+configobj
+gyp
+nemo-emblems
+pip
+pycairo
+pycrypto
+pygobject
+pyparted
+python-apt
+python-xlib
+pyxdg
+setproctitle
+six
