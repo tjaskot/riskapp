@@ -1,5 +1,4 @@
 configobj==5.0.6
-gyp==0.1
 nemo-emblems==3.8.0
 pycairo==1.16.2
 pycrypto==2.6.1
