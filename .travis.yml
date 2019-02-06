@@ -1,7 +1,1 @@
 language: python
-deploy:
-        provider: heroku
-        api_key: 
-        app:
-                master: riskapp-staging
-                production: riskapp-prod

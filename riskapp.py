@@ -6,6 +6,7 @@
 #########################
 
 from flask import Flask, render_template, request, url_for
+import os, sys
 app = Flask(__name__)
 
 @app.route('/')
@@ -56,3 +57,7 @@ with app.test_request_context('/login', method='POST'):
 
 with app.test_request_context('/loginerror'):
     assert request.path == '/loginerror'
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
