@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<!-- notfound.html -->
+<!-- contacts.html -->
 <html>
   <head>
     <link rel="stylesheet" href="../static/common.css">
-    <link rel="stylesheet" href="../static/notfound.css">
+    <link rel="stylesheet" href="../static/contacts.css">
   </head>
   <body>
-    <title>PageNotFound</title>
-    <p>Something went awry, please try again. If situation persists, please contact system administrator.</p>
+    <title>LoginError</title>
     <!-- This is the navigation bar -->
     <ul>
 	    <li><a href="/">Home</a></li>
             <li><a href="/generate">Generate</a></li>
-            <li><a href="/contacts">Contact</a></li>
+            <li><a class="active" href="/contacts">Contact</a></li>
             <li><a href="#About">About</a></li>
     </ul>
     <!-- end of navbar -->
+    <h2>Points of Contact for this Project.</h2>
+    <p>{{ poc1 }}</p>
+    <p>{{ poc2 }}</p>
+    <p>{{ poc3 }}</p>
+    <p>{{ poc4 }}</p>
   </body>
 </html>

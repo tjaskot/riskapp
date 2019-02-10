@@ -1,31 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
+<!-- index.html -->
 <html>
   <head>
-	  <!-- Meta Tags -->
-	  <link rel="stylesheet" href="../static/common.css">
-	  <link rel="stylesheet" href="../static/riskapp.css">
-
-	  <!-- CSS -->
+	  <!-- Vendor Dependencies -->
 	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-	  <!-- Images -->
+	  
+	  <!-- User Defined CSS -->
+	  <link rel="stylesheet" href="../static/common.css">
+	  <link rel="stylesheet" href="../static/riskappindex.css">
   </head>
+
   <body background="../static/doa.jpeg" class="doapng" alt="Doa Watermark">
           <title>RiskApplicationForDODAF</title>
 	  <div class="header">
-		  <h2>Risk Application Analyzer</h2>
-		  <p>This application is for the purpose of determining the risk associated to cost and schedule overrun for agile software development.</p>
+		  <h2 class="center paddingtop">Risk Application Analyzer</h2>
+		  <p class="center">This application is for the purpose of determining risk associated with cost and schedule overrun for agile software development.</p>
+	  </div>
+          <!-- This is the navigation bar -->
           <ul>
-                  <li><a class="active" href="/hello">Home</a></li>
-                  <li><a href="/login">News</a></li>
-                  <li><a href="/loginerror">Contact</a></li>
+                  <li><a class="active" href="/">Home</a></li>
+                  <li><a href="/generate">Generate</a></li>
+                  <li><a href="/contacts">Contact</a></li>
                   <li><a href="#About">About</a></li>
           </ul>
-          <p class="myclass">Welcome to application</p>
-
-          <!-- Static Scripts -->
-          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+          <!-- end of navbar -->
+          <p class="myclass">Welcome to application (will fill in more information as customer feedback is incorporated)</p>
+	  <section class="row">
+	          <div class="bkgw" alt="Problem Statement">
+	                  <p class="row bts15">{{ bkgrnd1 }}</p>
+	                  <p class="row bts15">{{ bkgrnd2d0 }}</p>
+	                  <p class="row bts15">{{ bkgrnd2d1 }}</p>
+	                  <p class="row bts15">{{ bkgrnd3 }}</p>
+	          </div>
+	  </section>
   </body>
+
+  <!-- Vendor Supplied Static Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <!-- User Defined Scripts -->
+
 </html>

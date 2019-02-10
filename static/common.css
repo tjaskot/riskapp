@@ -14,7 +14,7 @@ li {
 }
 
 li a {
-  display: block;
+  display: inline-block;
   color: white;
   text-align: center;
   padding: 14px 16px;
@@ -26,17 +26,27 @@ li a:hover {
 }
 
 li:last-child {
-  border-right: none;
+  border-right: 5px;
+  float: right;
+}
+
+/* This px padding accomodates for bootstrap negative left/right row margin of 15px, and adds plus 5 for nicer visuals */
+.bts15 {
+  margin: 0 20px 0 20px;
 }
 
 .active {
-  background-color: #4CAF50;
+  background-color: cadetblue;
 }
 
 .doapng {
- background-position-x: center; 
+  background-position-x: center; 
 }
 
 .redtext {
   color: red;
+}
+
+.bkgw {
+  background-color: white;
 }
