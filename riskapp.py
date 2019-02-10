@@ -51,7 +51,7 @@ def contacts():
     except:
         error = "This is my error."
         app.logger.error("Application is passing null into loginerror function.")
-    return render_template('contacts.html', error = error)
+    return render_template('contacts.html', error = error, poc1=poc1, poc2=poc2, poc3=poc3, poc4=poc4)
 
 @app.errorhandler(404)
 def not_found(error):
