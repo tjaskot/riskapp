@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <!-- index.html -->
 <html>
+<!--Notes-->
+<!--bts15 negates the bootstrap -15 px on right/left margin-->
+<!--The author uses jinja in the templates so that large character variables can be easily changed.-->
   <head>
 	  <!-- Vendor Dependencies -->
 	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -11,7 +14,7 @@
   </head>
 
   <body background="../static/doa.jpeg" class="doapng" alt="Doa Watermark">
-          <title>RiskApplicationForDODAF</title>
+          <title>Risk Application For DODAF</title>
 	  <div class="header">
 		  <h2 class="center paddingtop">Risk Application Analyzer</h2>
 		  <p class="center">This application is for the purpose of determining risk associated with cost and schedule overrun for agile software development.</p>
@@ -21,17 +24,24 @@
                   <li><a class="active" href="/">Home</a></li>
                   <li><a href="/generate">Generate</a></li>
                   <li><a href="/contacts">Contact</a></li>
-                  <li><a href="#About">About</a></li>
+                  <li><a href="/about">About</a></li>
           </ul>
           <!-- end of navbar -->
           <p class="myclass">Welcome to application (will fill in more information as customer feedback is incorporated)</p>
-	  <section class="row">
-	          <div class="bkgw" alt="Problem Statement">
-	                  <p class="row bts15">{{ bkgrnd1 }}</p>
+	  <section class="row"> <!--Explains purpose of application.-->
+		  <div class="bkgw" alt="Problem Statement"> <!--bkgw=backgroundWords__Created separate class so that without parent scope impact, only this div has a background of solid white.-->
+			  <p class="row bts15">{{ bkgrnd1 }}</p> 
 	                  <p class="row bts15">{{ bkgrnd2d0 }}</p>
 	                  <p class="row bts15">{{ bkgrnd2d1 }}</p>
 	                  <p class="row bts15">{{ bkgrnd3 }}</p>
 	          </div>
+	  </section>
+	  <section class="row dblock"> <!--Contains variable dial charts-->
+		  <div class="bts15">
+			  <img src="../static/colordial.png">
+			  <img src="../static/colorchartpieces.jpeg">
+			  <img src="../static/schedulingchart.png">
+		  </div>
 	  </section>
   </body>
 

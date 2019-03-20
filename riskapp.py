@@ -27,6 +27,7 @@ def index():
     return render_template('index.html', bkgrnd1=bkgrnd1, bkgrnd2d0=bkgrnd2d0, bkgrnd2d1=bkgrnd2d1, bkgrnd3=bkgrnd3)
 
 @app.route('/hello', methods=['GET'])
+# This route is simply to test api/visually the uri endpoint
 def hello():
     return "Hello this will provide a demonstration of the application. It will show you the projections for a sample set of data and provide you with instructions on how to generate your own relative data sets."
 
@@ -53,6 +54,10 @@ def contacts():
         app.logger.error("Application is passing null into loginerror function.")
     return render_template('contacts.html', error = error, poc1=poc1, poc2=poc2, poc3=poc3, poc4=poc4)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('notfound.html'), 404
@@ -70,6 +75,9 @@ with app.test_request_context('/generate', method='POST'):
 
 with app.test_request_context('/contacts'):
     assert request.path == '/contacts'
+
+with app.test_request_context('/about'):
+    assert request.path == '/about'
 
 # If environment is needed by host, then define variables below
 if __name__ == "__main__":

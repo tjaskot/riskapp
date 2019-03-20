@@ -50,3 +50,7 @@ li:last-child {
 .bkgw {
   background-color: white;
 }
+
+.center {
+  text-align: center;
+}
