@@ -1,10 +1,13 @@
-# riskapp
-[![Build Status](https://travis-ci.org/tjaskot/riskapp.svg?branch=master)](https://travis-ci.org/tjaskot/riskapp)
+### Riskapp ###
+# Markdown is used for github label tagging
 
+# Travis-ci build tag
+[![Build Status](https://travis-ci.org/tjaskot/riskapp.svg?branch=master)](https://travis-ci.org/tjaskot/riskapp)
 The .travis.yml file contains a script portion of the automated build. This script portion defaults to bash without any kernel language env being set.
 
 #User Defined Items
 The user defined variables are located in riskapp.py. These variables are then instantiated into the html templates on an as needed basis.
+Because virtual environments are being used to test the functionality both in python 2.7 and python 3.5, then there will be a 'riskapp' folder under the main folder that contains basic linux directories like lib/ and bin/.
 
 #Html Reference
 The index.html is the home page for the application and loads with window.onload browser function.

@@ -4,14 +4,18 @@
 # request
 # url_for
 # os
-# sys
+# sys 
+# plotly
 #########################
 
 from flask import Flask, render_template, request, url_for
-import os, sys
+import os, sys, plotly, json
+import plotly.plotly as py
+import plotly.graph_objs as go
+
 app = Flask(__name__)
 
-# Define User Variables
+# Define User Specific Variables
 bkgrnd1 = "Department of Defense (DOD) software development issues drive cost overruns and delay in capability delivery Majority of DOD Major Defense Acquisition Programs (MDAPs) rely on software development to varying degrees ODASA-CE does not have reliable systems / tools available to conduct entity driven tradeoff analysis or risk assessment of software development projects"
 bkgrnd2d0 = "- No solution mimicking the DOD Architecture Framework (DODAF) is readily available"
 bkgrnd2d1 = "- No software or simulation based solution is readily available Objective: Develop, document, and deliver baseline model of Department of the Army (DA) software development teams in order to support"
@@ -27,7 +31,7 @@ def index():
     return render_template('index.html', bkgrnd1=bkgrnd1, bkgrnd2d0=bkgrnd2d0, bkgrnd2d1=bkgrnd2d1, bkgrnd3=bkgrnd3)
 
 @app.route('/hello', methods=['GET'])
-# This route is simply to test api/visually the uri endpoint
+# This route is simply to test api/visually the uri endpoint with status 200 if success
 def hello():
     return "Hello this will provide a demonstration of the application. It will show you the projections for a sample set of data and provide you with instructions on how to generate your own relative data sets."
 
@@ -38,7 +42,7 @@ def generate():
         if valid_login(request.form['username'], request.form['password']):
             return log_the_user_in(request.form['username'])
         else:
-            error = "Invalide username/password"
+            error = "Invalid username/password"
             return redirect(url_for('notfound.html', error=error))
     return render_template('generate.html')
 
