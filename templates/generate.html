@@ -9,7 +9,7 @@
           <link rel="stylesheet" href="../static/css/common.css">
           <link rel="stylesheet" href="../static/css/generate.css">
   </head>
-  <body background="../static/images/doa.jpeg" class="doapng" alt="Doa Watermark">
+  <body background="../static/images/dasacearmy.png" class="doapng" alt="Doa Watermark">
     <title>Generate Total Risk Data</title>
     <div class="header">
             <h2 class="center paddingtop">Risk Application Analyzer</h2>
@@ -23,13 +23,23 @@
             <li><a href="/about">About</a></li>
     </ul>
     <!-- end of navbar -->
-    <h2>You are trying to use the application without authentication, please login with username and password (feature being added soon)..</h2>
-    
-    <!-- Plotly Dial Chart -->
-    <h2>
+    <h2 class="bkgw">Login with username and password (feature being added soon)..</h2>
+     
+    <h2 class="bkgw center">
 	    Plotly Dial Chart
     </h2>
-    <div id="schedulePlotChart" class="plotlychart"><!-- Plotly chart will be drawn inside this DIV --></div>
+    <!-- Plotly Dial Chart -->
+    <section class="bkgw center">
+            <div id="schedulePlotChart" class="userPlotlyChart">
+                  <!-- Schedule Plotly chart will be drawn inside this DIV -->
+	    </div>
+            <div id="riskPlotChart" class="userPlotlyChart">
+                  <!-- Risk Plotly chart will be drawn inside this DIV -->
+	    </div>
+            <div id="costPlotChart" class="userPlotlyChart">
+                  <!-- Cost Plotly chart will be drawn inside this DIV -->
+	    </div>
+    </section>
 
   </body>
 
@@ -40,6 +50,7 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <!-- User Defined Scripts -->
+  <!-- The reason the author uses a url_for static resource instead of relative path for js as in html style not based on Flask is to ensure that the javascript is loaded after the initial window.pageload. The result is that the div's will be organized in proper order with proper parent/child scope inheritance. -->
   <script type="text/javascript" src={{ url_for('static', filename='js/generate.js') }}></script>
 
 </html>

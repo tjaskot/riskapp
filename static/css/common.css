@@ -54,3 +54,25 @@ li:last-child {
 .center {
   text-align: center;
 }
+
+/* This max media is to accomodate for plotly */
+@media screen and (max-width: 599px) {
+  .userPlotlyChart {
+    width: 100%;
+    height: 85vh;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  .userPlotlyChart {
+    width: 600px;
+    height: 500px;
+  }
+}
+
+@media screen and (min-width: 801px) {
+  .userPlotlyChart {
+    width: 800px;
+    height: 650px;
+  }
+}
