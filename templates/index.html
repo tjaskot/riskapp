@@ -27,6 +27,8 @@
                   <li><a href="/about">About</a></li>
           </ul>
           <!-- end of navbar -->
+          <h2 class="bkgw">Login with username and password (feature being added soon)..</h2>
+
           <p class="myclass bkgw">Welcome to application (will fill in more information as customer feedback is incorporated)</p>
 	  <section class="row"> <!--Explains purpose of application.-->
 		  <div class="bkgw" alt="Problem Statement"> <!--bkgw=backgroundWords__Created separate class so that without parent scope impact, only this div has a background of solid white.-->
@@ -53,6 +55,8 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <!-- User Defined Scripts -->
+  <!-- The reason the author uses a url_for static resource instead of relative path for js as in html style not based on Flask is to ensure that the javascript is loaded after the initial window.pageload. The result is that the div's will be organized in proper order with proper parent/child scope inheritance. -->
   <script type="text/javascript" src={{ url_for('static', filename='js/riskappindex.js') }}></script>
+  <script type="text/javascript" src={{ url_for('static', filename='js/common.js') }}></script>
 
 </html>

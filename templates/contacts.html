@@ -31,4 +31,10 @@
           <p>{{ poc4 }}</p>
     </section>
   </body>
+
+  <!-- User Defined Scripts -->
+  <!-- The reason the author uses a url_for static resource instead of relative path for js as in html style not based on Flask is to ensure that the javascript is loaded after the initial window.pageload. The result is that the div's will be organized in proper order with proper parent/child scope inheritance. -->
+  <script type="text/javascript" src={{ url_for('static', filename='js/contacts.js') }}></script>
+  <script type="text/javascript" src={{ url_for('static', filename='js/common.js') }}></script>
+
 </html>

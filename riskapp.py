@@ -12,6 +12,7 @@ from flask import Flask, render_template, request, url_for
 import os, sys, plotly, json
 import plotly.plotly as py
 import plotly.graph_objs as go
+#   import MySQLdb #If future work for MySQL is wanted with database
 
 app = Flask(__name__)
 
@@ -61,6 +62,75 @@ def contacts():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+#This commented /generatesomethingelse app.route is for another call made from the javascript if an ajax call is wanted to post data anywhere for any purpose.
+#@app.route('/generatesomethingelse', methods=['POST'])
+#def genStuff():
+#    layout = {
+#        'xaxis': {
+#            'showticklabels': False,
+#            'showgrid': False,
+#            'zeroline': False,
+#        },
+#        'yaxis': {
+#            'showticklabels': False,
+#            'showgrid': False,
+#            'zeroline': False,
+#        },
+#        'shapes': [
+#            {
+#                'type': 'path',
+#                'path': 'M 0.235 0.5 L 0.24 0.65 L 0.245 0.5 Z',
+#                'fillcolor': 'rgba(44, 160, 101, 0.5)',
+#                'line': {
+#                    'width': 0.5
+#                },
+#                'xref': 'paper',
+#                'yref': 'paper'
+#            }
+#        ],
+#        'annotations': [
+#            {
+#                'xref': 'paper',
+#                'yref': 'paper',
+#                'x': 0.23,
+#                'y': 0.45,
+#                'text': '50',
+#                'showarrow': False
+#            }
+#        ]
+#    }
+#    # we don't want the boundary now
+#    base_chart['marker']['line']['width'] = 0
+#    
+#    fig = {"data": [base_chart, meter_chart],
+#           "layout": layout}
+#    py.iplot(fig, filename='gauge-meter-chart')
+#
+#    return render_template('pythonChart.html')
+
+#@app.route('/putValuesIntoDatabase', methods=['POST'])
+#def putDBValues():
+#    print('i want to set values in a database')
+#    #Open database connection
+#    db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+#    #prepare a cursor object using cursor() method
+#    cursor = db.cursor()
+#    
+#    #Prepare SQL query to INSERT a record into the database.
+#    sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
+#             LAST_NAME, AGE, INCOME)
+#             VALUES ('name', 'person', 20, 2000)"""
+#    try:
+#       # Execute the SQL command
+#       cursor.execute(sql)
+#       # Commit your changes in the database
+#       db.commit()
+#    except:
+#       # Rollback in case there is any error
+#       db.rollback()
+#    #disconnect from server
+#    db.close() 
 
 @app.errorhandler(404)
 def not_found(error):

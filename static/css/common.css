@@ -55,7 +55,7 @@ li:last-child {
   text-align: center;
 }
 
-/* This max media is to accomodate for plotly */
+/* Max media is for reactive display */
 @media screen and (max-width: 599px) {
   .userPlotlyChart {
     width: 100%;
