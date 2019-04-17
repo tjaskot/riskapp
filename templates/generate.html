@@ -17,7 +17,7 @@
     </div>
     <!-- This is the navigation bar -->
     <ul>
-	    <li><a href="/">Home</a></li>
+	    <li><a href="/home">Home</a></li>
             <li><a class="active" href="/generate">Generate</a></li>
             <li><a href="/contacts">Contact</a></li>
             <li><a href="/about">About</a></li>
@@ -27,34 +27,34 @@
 	    <form class="" action="/generate/chartData" method="POST">
 		    <h3 class="form-signin-heading">Please fill out the number values accordingly so Charts can be generated.</h3>
 
-		    <p>For how many weeks is your project scheduled?</p>
+		    <p class="bkgw">For how many weeks is your project scheduled?</p>
 		    <input type="number" id="weeksLong" name="weeksLong" class="form-control" placeholder="Number only" required>
 
-		    <p>What are the total amount of Features and/or Epics which need completing?</p>
+		    <p class="bkgw">What are the total amount of Features and/or Epics which need completing?</p>
 		    <input type="number" id="totEpics" name="totEpics" class="form-control" placeholder="Number only" required>
 
-		    <p>What is your sprint iteration cycle? (In Weeks)</p>
+		    <p class="bkgw">What is your sprint iteration cycle? (In Weeks)</p>
 		    <input type="text" id="sprintWeek" name="sprintWeek" min="2" max="6" class="form-control" placeholder="2, 3, 4, 5, or 6" required>
 
-		    <p>What is the percentage of effort your Tech Writer will be able to commit?</p>
+		    <p class="bkgw">What is the percentage of effort your Tech Writer will be able to commit?</p>
 		    <input type="text" id="techWriter" name="techWriter" class="form-control" placeholder="Number between 1-100" required>
 
-		    <p>What is the percentage of effort your Product Manager will be able to commit?</p>
+		    <p class="bkgw">What is the percentage of effort your Product Manager will be able to commit?</p>
 		    <input type="text" id="prodMan" name="prodMan" class="form-control" placeholder="Number between 1-100" required>
 
-		    <p>What percentage of effort will your junior developers be able to commit?</p>
+		    <p class="bkgw">What percentage of effort will your junior developers be able to commit?</p>
 		    <input type="text" id="jrDev" name="jrDev" class="form-control" placeholder="Number between 1-100" required>
 
-		    <p>What percentage of effort will your junior testers be able to commit?</p>
+		    <p class="bkgw">What percentage of effort will your junior testers be able to commit?</p>
 		    <input type="text" id="jrTest" name="jrTest" class="form-control" placeholder="Number between 1-100" required>
 
-		    <p>What percentage of effort will your senior developers be able to commit?</p>
+		    <p class="bkgw">What percentage of effort will your senior developers be able to commit?</p>
 		    <input type="text" id="srDev" name="srDev" class="form-control" placeholder="Number between 1-100" required>
 
-		    <p>What percentage of effort will your senior testers be able to commit?</p>
+		    <p class="bkgw">What percentage of effort will your senior testers be able to commit?</p>
 		    <input type="text" id="srTest" name="srTest" class="form-control" placeholder="Number between 1-100" required>
 
-		    <p>What is the cost for one story point in your project?</p>
+		    <p class="bkgw">What is the cost for one story point in your project?</p>
 		    <input type="text" id="storyPoint" name="storyPoint" class="form-control" placeholder="Number Only" required>
 
             </br>

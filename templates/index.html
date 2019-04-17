@@ -19,27 +19,60 @@
 		  <h2 class="center paddingtop">Risk Application Analyzer</h2>
 		  <p class="center">This application is for the purpose of determining risk associated with cost and schedule overrun for agile software development.</p>
 	  </div>
+
           <!-- This is the navigation bar -->
           <ul>
-                  <li><a class="active" href="/">Home</a></li>
+                  <li><a class="active" href="/home">Home</a></li>
                   <li><a href="/generate">Generate</a></li>
                   <li><a href="/contacts">Contact</a></li>
                   <li><a href="/about">About</a></li>
           </ul>
           <!-- end of navbar -->
-          <h2 class="bkgw">Login with username and password (feature being added soon)..</h2>
 
           <p class="myclass bkgw">Welcome to application (will fill in more information as customer feedback is incorporated)</p>
 	  <section class="row"> <!--Explains purpose of application.-->
 		  <div class="bkgw" alt="Problem Statement"> <!--bkgw=backgroundWords__Created separate class so that without parent scope impact, only this div has a background of solid white.-->
 			  <p class="row bts15">{{ bkgrnd1 }}</p> 
+			  </br>
 	                  <p class="row bts15">{{ bkgrnd2d0 }}</p>
+			  </br>
 	                  <p class="row bts15">{{ bkgrnd2d1 }}</p>
+			  </br>
 	                  <p class="row bts15">{{ bkgrnd3 }}</p>
+			  </br>
 	          </div>
 	  </section>
-	  <section class="row dblock"> <!--Contains example variable dial charts-->
+	  <section class="row dblock bkgw"> <!--Contains example variable dial charts-->
 		  <div class="bts15">
+			  <p>There are three sets of data which this project will focus upon. One example with the numbering that level sets what the definition of good is perceived to be, a set where mostly junior developers are leveraged, and a set where mostly senior developers and testers are leveraged.</p>
+			  </br>
+			  <p>From this information the users can gather that Schedule, Risk, and Cost are associated to the input data presented to the application algorithm.</p>
+			  </br>
+
+			  <h3>Dataset 1 with Chart Output</h3>
+			  <p>The numbers, respectively, for this dataset are 5, 10, 27.5, 27.5, 15, and 15.</p>
+			  <img src="{{ url_for('static', filename='images/Schedule1.png') }}" />
+			  <img src="{{ url_for('static', filename='images/Risk1.png') }}" />
+			  <img src="{{ url_for('static', filename='images/Cost1.png') }}" />
+
+			  <!--Using break 7 times to add extra space for visuals in between each grouping within the section-->
+			  </br></br></br></br></br></br></br>
+
+			  <h3>Dataset 2 with Chart Output</h3>
+			  <p>The numbers, respectively, for this dataset are 5, 0, 50, 30, 5, and 5.</p>
+			  <img src="{{ url_for('static', filename='images/Schedule2.png') }}" />
+			  <img src="{{ url_for('static', filename='images/Risk2.png') }}" />
+			  <img src="{{ url_for('static', filename='images/Cost2.png') }}" />
+
+			  <!--Using break 7 times to add extra space for visuals in between each grouping within the section-->
+			  </br></br></br></br></br></br></br>
+
+			  <h3>Dataset 3 with Chart Output</h3>
+			  <p>The numbers, respectively, for this dataset are 5, 5, 15, 15, 30, and 30.</p>
+			  <img src="{{ url_for('static', filename='images/Schedule3.png') }}" />
+			  <img src="{{ url_for('static', filename='images/Risk3.png') }}" />
+			  <img src="{{ url_for('static', filename='images/Cost3.png') }}" />
+			  </br>
 		  </div>
 	  </section>
   </body>

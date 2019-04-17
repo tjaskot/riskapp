@@ -7,28 +7,34 @@
 
 	  <!-- User Defined CSS -->
           <link rel="stylesheet" href="../static/css/common.css">
-          <link rel="stylesheet" href="../static/css/about.css">
+          <link rel="stylesheet" href="../static/css/login.css">
   </head>
   <body background="../static/images/dasacearmy.png" class="doapng" alt="Doa Watermark">
-    <title>Python Generated Plot Chart</title>
+    <title>About</title>
     <div class="header">
-            <h2 class="center paddingtop">Risk Application Analyzer</h2>
-            <p class="center">This application is for the purpose of determining risk associated with cost and schedule overrun for agile software development.</p>
+            <h2 class="center paddingtop">Risk Application Analyzer - Login</h2>
+            <p class="center">Please login to the application.</p>
     </div>
-    <!-- This is the navigation bar -->
-    <ul>
-	    <li><a href="/home">Home</a></li>
-            <li><a href="/generate">Generate</a></li>
-            <li><a href="/contacts">Contact</a></li>
-            <li><a href="/about">About</a></li>
-	    <!-- <li><a class="active" href="/pythonChart">PythonCharts</a></li> -->
-    </ul>
-    <!-- end of navbar -->
+
+    {% if error %}
+    <p class="bkgw error"><strong>Error:</strong> {{ error }} </p>
+    {% endif %}
+
+    <form action="/login" method="POST">
+	    <div id="loginpost" class="usrlogn">
+		    <input type="username" name="username" placeholder="Username" value="{{ request.form.username }}">
+		    </br>
+		    <input type="password" name="password" placeholder="Password" value="{{ request.form.password }}">
+		    </br>
+		    <input type="submit" value="Login">
+	    </div>
+    </form>
+
   </body>
 
   <!-- User Defined Scripts -->
   <!-- The reason the author uses a url_for static resource instead of relative path for js as in html style not based on Flask is to ensure that the javascript is loaded after the initial window.pageload. The result is that the div's will be organized in proper order with proper parent/child scope inheritance. -->
-  <script type="text/javascript" src={{ url_for('static', filename='js/pythonChart.js') }}></script>
+  <script type="text/javascript" src={{ url_for('static', filename='js/login.js') }}></script>
   <script type="text/javascript" src={{ url_for('static', filename='js/common.js') }}></script>
 
 </html>

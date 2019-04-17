@@ -17,119 +17,199 @@
     </div>
     <!-- This is the navigation bar -->
     <ul>
-	    <li><a href="/">Home</a></li>
+	    <li><a href="/home">Home</a></li>
             <li><a href="/generate">Generate</a></li>
             <li><a href="/contacts">Contact</a></li>
             <li><a class="active" href="/about">About</a></li>
     </ul>
     <!-- end of navbar -->
-    <h2>This information pertains to the workings of the application and it's framework.</h2>
+    <h2 class="bkgw">This information pertains to the workings of the application and it's framework.</h2>
 
-    <p>
-    workrate of junior and senior, get that from industry, work rate per hour
+    <p class="bkgw bts15">
+    </br>
+    Workrate of junior and senior, get that from industry, work rate per hour
      - create number from table numbers
+    </br>
+    </br>
     
-    cost per cycle, median salary to hour
+    Cost per cycle, median salary to hour
      - cost is the workrate * story point
+    </br>
+    </br>
     
-    total average number of stories per epic
-     - based on story point calculation for entirety of contract, if less than 500 the stories per sprint can be 7-10, if there are more than 500, then the stories average is between 10-15 per sprint, if more than 1500 than story average per sprint should be between 15 and 18 as the stories will be broken into more defined tasks due to complexity
-     - the algorithm will take each into account and break it down into further numbers, down to each unit of story count. Refer to generate.js for algorithm
-     - create total weeks divided by sprint number and allocate epics to get total epics per sprint 
-    
-    including release how many hours per sprint
+    Total average number of stories per epic
+    </br>
+     - Based on story point calculation for entirety of contract, if less than 500 the stories per sprint can be 7-10, if there are more than 500, then the stories average is between 10-15 per sprint, if more than 1500 than story average per sprint should be between 15 and 18 as the stories will be broken into more defined tasks due to complexity
+    </br>
+     - The algorithm will take each into account and break it down into further numbers, down to each unit of story count. Refer to generate.js for algorithm
+    </br>
+     - Create total weeks divided by sprint number and allocate epics to get total epics per sprint, including release how many hours per sprint
+    </br>
      - 2.5% should be allocated to release activities ~2 hours for 2 week sprint, etc...
+    </br>
+    </br>
     
-    given a total minimum average of 16 hours per sprint *taken from mitre agile paper* - minus this
-     - this takes into account a good backlog and clean sprint objectives and deliverables and prioritized stories and sprint demo is what clients want...also based on sprint of 2 or 3 or 4 or 5 or 6 (figure out)
+    Given a total minimum average of 16 hours per sprint *taken from mitre agile paper* - minus this
+    </br>
+     - This takes into account a good backlog and clean sprint objectives and deliverables and prioritized stories and sprint demo is what clients want...also based on sprint of 2 or 3 or 4 or 5 or 6 (figure out)
+    </br>
+    Limits of work capable and then this is base, over and under from here
+    </br>
+    </br>
     
-    limits of work capable and then this is base, over and under from here
+    Inputs:
+    </br>
     
-    
-    inputs:
-    
-    how many weeks long is project?
-    how many total features/epics will be needed?
-    how many long is your sprint iteration?
+    How many weeks long is project?
+    </br>
+    How many total features/epics will be needed?
+    </br>
+    How many long is your sprint iteration?
+    </br>
     **percent of agile effort:
-    techwriters - define % - 95% correct interpretation of documents written
-    pm          - define % - 95% accurate product understanding
-    jrdevs      - define % - 70% of creating an application without flaws/bugs/security issues
-    jrtesters   - define % - 80% of finding all issues/bugs/flaws internal to application
-    over 10 years of experience defines senior, junior is less than 10 years
-    srdevs      - define % - 85% of creating an application without flaws/bugs/security issues
-    srtesters   - define % - 90% of finding all issues/bugs/flaws internal to application
+    </br>
+    Techwriters - define % - 95% correct interpretation of documents written
+    </br>
+    PM          - define % - 95% accurate product understanding
+    </br>
+    Jrdevs      - define % - 70% of creating an application without flaws/bugs/security issues
+    </br>
+    Jrtesters   - define % - 80% of finding all issues/bugs/flaws internal to application
+    </br>
+    Over 10 years of experience defines senior, junior is less than 10 years
+    </br>
+    Srdevs      - define % - 85% of creating an application without flaws/bugs/security issues
+    </br>
+    Srtesters   - define % - 90% of finding all issues/bugs/flaws internal to application
+    </br>
     **
-    cost single point = defined for 1200
+    </br>
+    Cost single point = defined for 1200
+    </br>
+    </br>
     
-    
-    mandatory, which will be used in algorithm (not maliable):
-    built-in: will the features/epics also need to be release/deployed? hours
-    cost of contribution - integrated 
-    ranking - 1 2 3
+    Mandatory, which will be used in algorithm (not maliable):
+    </br>
+    Built-in: will the features/epics also need to be release/deployed? hours
+    </br>
+    Cost of contribution - integrated 
+    </br>
+    Ranking - 1 2 3
+    </br>
     **a median salary - from ranking data: 
+    </br>
     67000  
+    </br>
     210000 
+    </br>
     88000  
+    </br>
     88000  
+    </br>
     185000 
+    </br>
     185000 
+    </br>
     **
+    </br>
     
     
-    output:
-    then min and max as output in csv for standard without percentage taken, then min for best case without errors, and max for worst case with all errors and deadlines missed
-    algorithm numbers for visual input data
-    epic likeliness of succeeding and meeting product expectations
-    charts will show the mean value for each of the respective categories cost, risk, and schedule
-    the csv file output contains the over budget and under budget values that can be used to create sanitized data tables
+    Output:
+    </br>
+    Then min and max as output in csv for standard without percentage taken, then min for best case without errors, and max for worst case with all errors and deadlines missed
+    </br>
+    Algorithm numbers for visual input data
+    </br>
+    Epic likeliness of succeeding and meeting product expectations
+    </br>
+    Charts will show the mean value for each of the respective categories cost, risk, and schedule
+    </br>
+    The csv file output contains the over budget and under budget values that can be used to create sanitized data tables
+    </br>
+    </br>
     
     
     Notes:
+    </br>
     Our outputs are expected to be very linear in the data sets because the information we predict is all based on trend data. If a regression model is to be interpolated, then one must leverage gathered data from devlopment scrum team and input the respective values into a combined prediction chart of the three sets of charts this application develops. For example, once a trend of stability is produced by a contract, then the average cost per unit of work can be accurately predicted. Once this prediction model is created, the user can then create a repeating table with available tasking and bandwidth with precise numbers based on trend information.
+    </br>
     
     Because the amount of release hours per sprint are either static or vary with littel fluxuation, it is clear to the observer that releasing more often will produce better results for the customer as well as the developers. The developers will be able to review their work and make revisions with a quicker turnaround as compared to a sprint with longer weeks and iterations. The product manager and customer will be able to provide more precise feedback because their observatiions are more frequent and include more communication.
+    </br>
     
     The percentage of success for each value were defined by correlating integer values to the respective english phrases. For example the input for tech writer "What is the percentage of effor your Tech Writer..." is interpolated as integer success value of 95%. This was a project decision, as writing documents has litle failure. This logic applies to all of the input enligh phrases which correlate to integer values.
-    Each individual group gets 30 points allocated to it because there are 6 groups total an
-    d with there being 180 degrees in a dial chart 180/6 is equal to 30. The algorithm then takes each area into account and subtracts points accordingly with the weighted values for each group.
+    </br>
+    Each individual group gets 30 points allocated to it because there are 6 groups total and with there being 180 degrees in a dial chart 180/6 is equal to 30. The algorithm then takes each area into account and subtracts points accordingly with the weighted values for each group.
+    </br>
     
     For security purposes, the variables located in the javascript files are open and do not matter if their data is available. However, variables located in the python file are automatically handled by flask and not readily available to a user. Therefore all sensitive data for this application is located in the riskapp.py file.
+    </br>
     
     The ultimate cost variable is calculated by the median salary for each individual and accounts for the total number of sprints. The risk variable is calculated by the percentage of success rate for each given group of individual. The shcedule variableis calculated based on the number of weeks for each sprint iteration cycle and takes into account the risk calcualtion because taking time out of the schedule to hit a deadline inherintly assumes risk, and as that risk is accepted into the program or application the schedule should reflect that accomodation. The schedule variable is also based off the success of the testers' capabilities to debug all items to find defects.
+    </br>
+    </br>
     
     Next steps:
+    </br>
     Derek and team would be create a looped version of this app that does this for each sprint/epic since they want full version. it would be relatively easy for them to transition to this state becaus the app can take inputs, but those can be scaled and modified very simply.  trend based analysis and multiple data points when we don't have specific inpust from a vendor
+    </br>
     
     Although derek will create historic data, if you want futeristic data, then use rand number generator from python because people being in office is not reliable and can be related to random number
+    </br>
+    </br>
     
     
-    tech doc in about:
+    Leveraged many resources including that of the Flask framework, Travis-CI build process, and standardized software application file structure.
+    </br>
+    References:
+    </br>
     ReadMe.md located at https://github.com/tjaskot/riskapp with all code and files commented for understanding and explanation
+    </br>
     http://flask.pocoo.org
+    </br>
     http://flask.pocoo.org/docs/1.0/installation/#dependencies
+    </br>
     http://flask.pocoo.org/docs/1.0/installation/#virtual-environments
+    </br>
     http://flask.pocoo.org/docs/1.0/installation/#install-flask
+    </br>
     http://flask.pocoo.org/docs/1.0/installation/#install-virtualenv
+    </br>
     http://flask.pocoo.org/docs/1.0/quickstart/#static-files
+    </br>
     http://flask.pocoo.org/docs/1.0/quickstart/#rendering-templates
+    </br>
     http://flask.pocoo.org/docs/1.0/tutorial/templates/
+    </br>
     http://flask.pocoo.org/docs/1.0/templating/#jinja-setup
+    </br>
     http://flask.pocoo.org/docs/1.0/config/
+    </br>
     http://www.tutorialspoint.com/flask/flask_cookies.htm
+    </br>
     http://www.tutorialspoint.com/flask/flask_sessions.htm
+    </br>
     https://codehandbook.org/python-flask-jquery-ajax-post/
+    </br>
     https://plot.ly/javascript/gauge-charts/
+    </br>
     https://plot.ly/python/gauge-charts/
+    </br>
     https://plot.ly/javascript/basic-charts/
+    </br>
     https://www.w3schools.com/*
+    </br>
     https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications
+    </br>
     https://dashboard.heroku.com/apps
+    </br>
     syst699riskapp.herokuapp.com/
+    </br>
     https://github.com/tjaskot/riskapp/
+    </br>
     https://travis-ci.org
-    -------------------------------------
-    TODO: create framework screenshots for us as example, with multiple url's (will be added soon)...
+    </br>
+    </br>
     </p>
 
   </body>

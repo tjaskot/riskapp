@@ -2,16 +2,19 @@
 # Flask
 # render_template
 # request
+# redirect
 # url_for
 # os
 # sys 
 # plotly
 #########################
 
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 import os, sys, plotly, json
 import plotly.plotly as py
 import plotly.graph_objs as go
+#from sqlalchemy import create_engine
+#from sqlalchemy.orm import sessionmaker
 #   import MySQLdb #If future work for MySQL is wanted with database
 
 app = Flask(__name__)
@@ -28,13 +31,39 @@ poc4 = "Trevor Jaskot - Systems 699 Student"
 
 # Application Generated Routes
 @app.route('/')
-def index():
-    return render_template('index.html', bkgrnd1=bkgrnd1, bkgrnd2d0=bkgrnd2d0, bkgrnd2d1=bkgrnd2d1, bkgrnd3=bkgrnd3)
+def root():
+    #Code to check the user session or browser cookie, otherwise redirect to login
+    #Session = sessionmaker(bind=engine)
+    #session = Session()
+    #user = User("admin","password")
+    #session.add(user)
+    #if (username = request.cookies.get('username')):
+    #    return url_redirect('/index')
+    #else:
+    #    return render_template('login.html', error=error)
+    #return redirect(url_for('login'))
+    return render_template('login.html')
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        login = request.form['username']
+        password = request.form['password']
+        if login == "admin" and password == "admin":
+            return redirect(url_for('home'))
+        else:
+            error = "Incorrect Information. Please Try Again."
+            return render_template('login.html', error=error)
 
 @app.route('/hello', methods=['GET'])
 # This route is simply to test api/visually the uri endpoint with status 200 if success
 def hello():
     return "Hello this will provide a demonstration of the application. It will show you the projections for a sample set of data and provide you with instructions on how to generate your own relative data sets."
+
+@app.route('/home')
+def home():
+    return render_template('index.html', bkgrnd1=bkgrnd1, bkgrnd2d0=bkgrnd2d0, bkgrnd2d1=bkgrnd2d1, bkgrnd3=bkgrnd3)
 
 @app.route('/generate', methods=['POST', 'GET'])
 def generate():
@@ -152,6 +181,13 @@ with app.test_request_context('/contacts'):
 
 with app.test_request_context('/about'):
     assert request.path == '/about'
+
+with app.test_request_context('/login', method='POST'):
+    assert request.path == '/login'
+    assert request.method == 'POST'
+
+with app.test_request_context('/home'):
+    assert request.path == '/home'
 
 # If environment is needed by host, then define variables below
 if __name__ == "__main__":
