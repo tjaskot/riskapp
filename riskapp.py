@@ -92,6 +92,10 @@ def contacts():
 def about():
     return render_template('about.html')
 
+@app.route('/datafunction')
+def datafunction():
+    #Eric put your code here
+
 #This commented /generatesomethingelse app.route is for another call made from the javascript if an ajax call is wanted to post data anywhere for any purpose.
 #@app.route('/generatesomethingelse', methods=['POST'])
 #def genStuff():
@@ -188,6 +192,9 @@ with app.test_request_context('/login', method='POST'):
 
 with app.test_request_context('/home'):
     assert request.path == '/home'
+
+with app.test_request_context('/datafunction'):
+    assert request.path == '/datafunction'
 
 # If environment is needed by host, then define variables below
 if __name__ == "__main__":
