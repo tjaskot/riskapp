@@ -13,65 +13,163 @@
 	  <link rel="stylesheet" href="../static/css/riskappindex.css">
   </head>
 
-  <body background="../static/images/dasacearmy.png" class="doapng" alt="Doa Watermark">
-          <title>Risk Application For DODAF</title>
-	  <div class="header">
-		  <h2 class="center paddingtop">Risk Application Analyzer</h2>
-		  <p class="center">This application is for the purpose of determining risk associated with cost and schedule overrun for agile software development.</p>
+  <!--<body background="../static/images/dasacearmy.png" class="doapng" alt="Doa Watermark">-->
+  <title>Risk Application For DODAF</title>
+  <div class="header bts15">
+	  <div id="headerLeftImage" class="inLineBlok headerLeft">
+		  <!--<img src="../static/images/dasa-ce.png" alt="logoNISEC">-->
+		  <img src="{{ url_for('static', filename='images/dasa-ce.png') }}" />
 	  </div>
+	  <div id="headerCenterTitle" class="inLineBlok headerCenter">
+		  <h2 class="row center paddingtop">Software Development Risk Analysis Application</h2>
+		  <p class="row center">This application is for the purpose of determining risk, cost, and schedule associated with an agile software development project.</p>
+	  </div>
+	  <div id="headerRightImage" class="inLineBlok headerRight">
+		  <!--<img src="../static/images/GMU_PLogo_RGB.jpg" alt="gmurgb">-->
+		  <img src="{{ url_for('static', filename='images/GMU_PLogo_RGB.jpg') }}" />
+	  </div>
+  </div>
 
-          <!-- This is the navigation bar -->
-          <ul>
-                  <li><a class="active" href="/home">Home</a></li>
-                  <li><a href="/generate">Generate</a></li>
-                  <li><a href="/contacts">Contact</a></li>
-                  <li><a href="/about">About</a></li>
-          </ul>
-          <!-- end of navbar -->
+  <!-- This is the navigation bar -->
+  <ul>
+	  <li><a class="active" href="/home">Home</a></li>
+          <li><a href="/home#probstmnt">Project Overview</a></li>
+          <li><a href="/home#appbkgnd">Application Background</a></li>
+          <li><a href="/home#anlaprch">Model Approach</a></li>
+          <li><a href="/contacts">Team</a></li>
+          <li><a href="/generate">Generate</a></li>
+          <li><a href="/about">About</a></li>
+  </ul>
+  <!-- end of navbar -->
 
-          <p class="myclass bkgw">Welcome to application (will fill in more information as customer feedback is incorporated)</p>
-	  <section class="row"> <!--Explains purpose of application.-->
-		  <div class="bkgw" alt="Problem Statement"> <!--bkgw=backgroundWords__Created separate class so that without parent scope impact, only this div has a background of solid white.-->
-			  <p class="row bts15">{{ bkgrnd1 }}</p> 
+<!--
+	  <section class="bkgw row"> 
+-->
+	  <!--Explains purpose of application.-->
+		  <!--NOTE: The author uses both jinja template variables and html breaks to show the user/developer the templating for both options.-->
+<!--
+		  <div alt="Problem Statement"> 
+-->
+		  <!--bkgw=backWords__Created separate class so that without parent scope impact, only this div has a backgrnd of solid white.-->
+<!--
+			  <p class="navOffCntr row bts15">{{ bkgrnd1 }}</p> 
 			  </br>
-	                  <p class="row bts15">{{ bkgrnd2d0 }}</p>
+	                  <p class="navOffCntr row bts15">{{ bkgrnd2d0 }}</p>
 			  </br>
-	                  <p class="row bts15">{{ bkgrnd2d1 }}</p>
+	                  <p class="navOffCntr row bts15">{{ bkgrnd2d1 }}</p>
 			  </br>
-	                  <p class="row bts15">{{ bkgrnd3 }}</p>
+	                  <p class="navOffCntr row bts15">{{ bkgrnd3 }}</p>
 			  </br>
 	          </div>
 	  </section>
-	  <section class="row dblock bkgw"> <!--Contains example variable dial charts-->
-		  <div class="bts15">
-			  <p>There are three sets of data which this project will focus upon. One example with the numbering that level sets what the definition of good is perceived to be, a set where mostly junior developers are leveraged, and a set where mostly senior developers and testers are leveraged.</p>
+-->
+  <section class="bkgw">
+	  </br>
+	  <div class="linkShift" id="probstmnt"></div>
+	  <div class="navOffCntr">
+		  <h5 class="center">
+		  PROBLEM STATEMENT
+		  </h5>
+		  <p>
+		  </br>
+Software development deficiencies in the DOD drive cost overruns and delay in capability delivery. NISEC does not have a reliable analytic method for projecting risk of delays or cost overruns. This project aims to provide an analytic framework and initial capability product to fill this capability gap.
+		  </p>
+	  </div>
+
+	  <div class="linkShift" id="appbkgnd"></div>
+	  <div class="navOffCntr">
+		  <h5 class="center">
+		  BACKGROUND
+		  </h5>
+		  <p>
+		  </br>
+Department of Defense (DOD) software development problems drive cost overruns and delay in capability delivery. The majority of DOD Major Defense Acquisition Programs (MDAPs) rely on software development to varying degrees, which puts the spotlight on software development teams to improve cost and schedule projections along with the ability to predictably execute projects to the plan.
+The nature of soft        ware development makes the problem of projecting cost and schedule requirements difficult. Software development is an unpredictable process, regardless of the controls in place. The unpredictability of the process is largely due to the technical expertise required to perform the job and business constraints (think staffing, leadership, client involvement, and external deadlines). The DOD has recently taken a number of steps toward identifying a solution.
+		  </br>
+First, DOD acquisition projects have historically followed a highly structured, top-down, step-by-step process (called Waterfall Development), based on the assumption that an end state of the project is known at inception (Northern, Mayfield, Benito, and Casagni, 2010). Many projects involving information technology (IT) requirements are transitioning to an agile development framework, which is a more resilient development environment where development occurs in small, discrete steps called sprints that culminate in epics. Epics can be used to track multiple stories or tasks which need tracking for a larger body of work. Epics can be of any size and is determined by the scrum team with reasoning described within the team working agreement. Another key characteristic of agile development is the continual delivery of operational software and client involvement throughout the production, not just at the beginning.
+		  </br>
+The DOD also established the Defense Innovation Board (DIB) in 2016 to address key problems in capability development and acquisition. The DIB is made up of technology leaders across the nation in private industry to offer a third-party perspective on DOD processes. The first, and ongoing, task of the board is to advise on how to improve the software development processes. To date, the DIB has provided a plethora of guidance on how to manage programs and effective metrics to predict impending cost or schedule slip, but no tangible solutions have been identified for making accurate projections early in the project in order to support budgeting.
+		  </br>
+DOD analysts are attempting to fill the void by building predictive regression models. These models are supported by historical data and resources. Nonetheless, to date, these models have fallen short in aiding decision makers in improving projections. This is likely a result of the nature of software development discussed above. Predictive models will always have a difficult time anticipating changes in the process due to individuals and the model is built at the team level.
+		  </br>
+With predictive models falling short in many cases, DOD organizations are taking the initiative to pursue other options. This project is sponsored by the Office of the Deputy Assistant Secretary of the Army (ODASA) Cost and Economics (CE) division and will aim to identify a baseline analytic product to assess risk and project cost and schedule requirements of software development projects.
+		  </p>
+	  </div>
+
+	  <div class="linkShift" id="anlaprch"></div>
+	  <div class="navOffCntr">
+		  <h5 class="center">
+		  ANALYTIC APPROACH
+		  </h5>
+		  <p>
+		  </br>
+Independently develop discrete event simulation for the accomplishment of project tasks by sprint and epic.
+		  </br>
+    • Research items will be leveraged from the MIT Agile Project Dynamics Model to inform simulation design.
+		  </br>
+    • To be designed with modular framework for tradeoff analysis of development processes.
+		  </br>
+    • Solution deployed with standalone executable and web base application.
+		  </br>
+With these guidelines in place, a model architecture was developed for analysis and deployment.
+		  </p>
+	  </div>
+	  </br>
+
+	  <!--This height div added so that screen links can focus on paragraph and the browser has additional view height for adjustments-->
+	  <div style="height: 25vh;"></div>
+
+	  <section class="bkgw"> <!--Contains example variable dial charts-->
+		  <div class="navOffCntr">
+			  <h5 class="center">Example Output - 3 Sets of Data</h5>
 			  </br>
-			  <p>From this information the users can gather that Schedule, Risk, and Cost are associated to the input data presented to the application algorithm.</p>
+			  <p>From this information the users can gather that Schedule, Risk, and Cost are associated to the input data presented to the application algorithm, located in the Generate tab.</p>
 			  </br>
 
-			  <h3>Dataset 1 with Chart Output</h3>
+			  <h5 class="center">Dataset 1 with Chart Output</h5>
 			  <p>The numbers, respectively, for this dataset are 5, 10, 27.5, 27.5, 15, and 15.</p>
+			  <!--Surrouding the images with p tags so that css will make them reactive-->
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Schedule1.png') }}" />
+			  </p>
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Risk1.png') }}" />
+			  </p>
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Cost1.png') }}" />
+			  </p>
 
 			  <!--Using break 7 times to add extra space for visuals in between each grouping within the section-->
 			  </br></br></br></br></br></br></br>
 
-			  <h3>Dataset 2 with Chart Output</h3>
+			  <h5 class="center">Dataset 2 with Chart Output</h5>
 			  <p>The numbers, respectively, for this dataset are 5, 0, 50, 30, 5, and 5.</p>
+			  <!--Surrouding the images with p tags so that css will make them reactive-->
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Schedule2.png') }}" />
+			  </p>
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Risk2.png') }}" />
+			  </p>
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Cost2.png') }}" />
+			  </p>
 
 			  <!--Using break 7 times to add extra space for visuals in between each grouping within the section-->
 			  </br></br></br></br></br></br></br>
 
-			  <h3>Dataset 3 with Chart Output</h3>
+			  <h5 class="center">Dataset 3 with Chart Output</h5>
 			  <p>The numbers, respectively, for this dataset are 5, 5, 15, 15, 30, and 30.</p>
+			  <!--Surrouding the images with p tags so that css will make them reactive-->
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Schedule3.png') }}" />
+			  </p>
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Risk3.png') }}" />
+			  </p>
+			  <p class="center">
 			  <img src="{{ url_for('static', filename='images/Cost3.png') }}" />
+			  </p>
 			  </br>
 		  </div>
 	  </section>

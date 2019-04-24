@@ -39,6 +39,30 @@ li:last-child {
   background-color: cadetblue;
 }
 
+.inLineBlok { 
+  display: inline-block;
+}
+
+.headerLeft {
+  width: 17.5vw;
+  /*float: left;*/
+  /*position: absolute;*/
+  /*left: 0px;*/
+}
+
+.headerCenter {
+  width: 50vw;
+  /*position: absolute;*/
+  /*left: 25vw;*/
+}
+
+.headerRight {
+  width: 20vw;
+  /*float: right;*/
+  /*position: absolute;*/
+  /*right: 0px;*/
+}
+
 .doapng {
   background-position-x: center; 
 }
@@ -53,6 +77,15 @@ li:last-child {
 
 .center {
   text-align: center;
+}
+
+.navOffCntr {
+  /*top and bottom margin taken care of by div for reactive approach with nav bar, controlled by linkShift class*/
+  padding: 0 8vh 0 8vh;
+}
+
+.linkShift {
+  padding-bottom: 15vh;
 }
 
 /* Max media is for reactive display */
