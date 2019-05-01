@@ -9,26 +9,41 @@
           <link rel="stylesheet" href="../static/css/common.css">
           <link rel="stylesheet" href="../static/css/contacts.css">
   </head>
-  <body background="../static/images/dasacearmy.png" class="doapng" alt="Doa Watermark">
+  <!--<body background="../static/images/dasacearmy.png" class="doapng" alt="Doa Watermark">-->
     <title>Contact Information</title>
     <div class="header">
-	    <h2 class="center paddingtop">Risk Application Analyzer</h2>
-	    <p class="center">This application is for the purpose of determining risk associated with cost and schedule overrun for agile software development.</p>
+            <h2 class="center paddingtop">Software Development Risk Analysis Application</h2>
+            <p class="center">This application is for the purpose of determining risk, cost, and schedule associated with an agile software development project.</p>
     </div>
     <!-- This is the navigation bar -->
     <ul>
-	    <li><a href="/home">Home</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/home#probstmnt">Project Overview</a></li>
+            <li><a href="/home#appbkgnd">Application Background</a></li>
+            <li><a href="/home#anlaprch">Model Approach</a></li>
+            <li><a class="active" href="/contacts">Team</a></li>
             <li><a href="/generate">Generate</a></li>
-            <li><a class="active" href="/contacts">Contact</a></li>
             <li><a href="/about">About</a></li>
     </ul>
     <!-- end of navbar -->
+    <!--<h2 class="container">Points of Contact for this Project</h2>-->
     <section class="bkgw">
-          <h2>Points of Contact for this Project.</h2>
+	  <div class="navOffCntr">
+		  <!--This div added for height compensation-->
+		  <div style="height: 8vh;"></div>
+	          <p id="prjspnsr" class="center">
+	          PROJECT SPONSOR  / Team
+	          </p>
+		  <p>
+	          </br>
+ODASA-CEs         Army decision-makers with cost, performance and economic analysis in the form of expertise, models, data, estimates, and analysis. The ODASA-CE Networks, Information Systems, Software and Electronics Costing (NISEC) Division is the lead for developing life cycle cost estimates for communications-electronics systems, major automated information systems (AIS), defense business systems (DBS) and software intensive systems. NISEC is stationed at Fort Belvoir, VA, and is the government lead commissioning for this study thru George Mason University (GMU) Volgenau School of Engineering.
+	          </p>
+	          </br></br></br></br></br>
+	  </div>
           <p class="cmargin">{{ poc1 }}</p>
           <p class="cmargin">{{ poc2 }}</p>
-          <p class="cmargin">{{ poc3 }}</p>
           <p class="cmargin">{{ poc4 }}</p>
+          <p class="cmargin">{{ poc3 }}</p>
     </section>
   </body>
 

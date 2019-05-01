@@ -24,10 +24,10 @@ bkgrnd1 = "Department of Defense (DOD) software development issues drive cost ov
 bkgrnd2d0 = "- No solution mimicking the DOD Architecture Framework (DODAF) is readily available"
 bkgrnd2d1 = "- No software or simulation based solution is readily available Objective: Develop, document, and deliver baseline model of Department of the Army (DA) software development teams in order to support"
 bkgrnd3 = "ODASA-CE analysis of projects including validation and verification (V/V) of program manager projections, staffing policy development, and interdependent processes exploration"
-poc1 = "Derek Eichin - Operations Research Analyst (ODASA)"
-poc2 = "Leo Pacatan - Systems 699 Student"
-poc3 = "Eric Jones - Systems 699 Student"
-poc4 = "Trevor Jaskot - Systems 699 Student"
+poc1 = "Derek Eichin - Customer and Project Owner - Operations Research Analyst (ODASA)"
+poc2 = "Leo Pacatan - Product Owner, Contributor - Systems 699 Student"
+poc4 = "Trevor Jaskot - Developer, Contributor - Systems 699 Student"
+poc3 = "Eric Jones - Stochastic Model Owner, Contributor - Systems 699 Student"
 
 # Application Generated Routes
 @app.route('/')
@@ -79,21 +79,20 @@ def generate():
 @app.route('/contacts')
 #Syntax of python flask does not require variable from redirect to be passed into the below def function
 def contacts():
-    #Checks to see if error is null, and catches exception
-    try:
-        #This code may raise an error if nothing is not null
-        error = error
-    except:
-        error = "This is my error."
-        app.logger.error("Application is passing null into loginerror function.")
-    return render_template('contacts.html', error = error, poc1=poc1, poc2=poc2, poc3=poc3, poc4=poc4)
+    return render_template('contacts.html', poc1=poc1, poc2=poc2, poc3=poc3, poc4=poc4)
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+@app.route('/datafunction')
+def datafunction():
+    #Eric put your code here
+    myVal = ""
+    return myVal
+
 #This commented /generatesomethingelse app.route is for another call made from the javascript if an ajax call is wanted to post data anywhere for any purpose.
-#@app.route('/generatesomethingelse', methods=['POST'])
+#@app.routeasl;dkfj('/generatesomethingelse', methods=['POST'])
 #def genStuff():
 #    layout = {
 #        'xaxis': {
@@ -163,6 +162,13 @@ def about():
 
 @app.errorhandler(404)
 def not_found(error):
+    ##Checks to see if error is null, and catches exception
+    #try:
+    #    #This code may raise an error if nothing is not null
+    #    error = error
+    #except:
+    #    error = "This is my error."
+    #    app.logger.error("Application is passing null into loginerror function.")
     return render_template('notfound.html'), 404
 
 #Unit tests for application below (unit test code coverage +70%)
@@ -188,6 +194,9 @@ with app.test_request_context('/login', method='POST'):
 
 with app.test_request_context('/home'):
     assert request.path == '/home'
+
+with app.test_request_context('/datafunction'):
+    assert request.path == '/datafunction'
 
 # If environment is needed by host, then define variables below
 if __name__ == "__main__":
