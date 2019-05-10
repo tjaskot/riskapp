@@ -87,7 +87,6 @@ def about():
 
 @app.route('/datafunction')
 def datafunction():
-    #Eric put your code here
     myVal = ""
     return myVal
 
