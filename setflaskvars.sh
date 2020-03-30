@@ -34,19 +34,19 @@ select devprod in "Dev" "Prod"; do
 done
 
 while true; do
-	read -p "Do you want to start either a flask or foreman server (Yy/Nn)? " ff
+	read -p "Do you want to start a server (Yy/Nn)? " ff
 	case $ff in
-		[Yy]* ) echo "Which one? (Select 1 or 2) "
-			select forf in "foreman" "flask"; do
-				case $forf in
-					foreman ) echo "I'm starting a foreman server for you. Please make sure you have the package installed, otherwise this will fail."
-						foreman start;
-						break;;
-					flask ) echo "I have set your env vars, starting flask."
+		[Yy]* ) #echo "Which one? (Select 1 or 2) "
+			#select forf in "foreman" "flask"; do
+			#	case $forf in
+			#		foreman ) echo "I'm starting a foreman server for you. Please make sure you have the package installed, otherwise this will fail."
+			#			foreman start;
+			#			break;;
+			#		flask ) echo "I have set your env vars, starting flask."
 						flask run;
-						break;;
-				esac
-			done;break;;
+			#			break;;
+			#	esac
+			#done;break;;
 		[Nn]* ) echo "Okay, please start the server before going to the localhost endpoint in your browser."; break;;
 		* ) echo "Please select one of the options."
 	esac
