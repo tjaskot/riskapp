@@ -5,14 +5,25 @@
 # redirect
 # url_for
 # os
-# sys 
+# sys
 # plotly
+# email (mime)
+# jsonify
+# send_file
+# collections
+# logging
+# importlib
 #########################
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, jsonify, send_file
 import os, sys, plotly, json
-import plotly.plotly as py
-import plotly.graph_objs as go
+import chart_studio.plotly as py
+import plotly.graph_objects as go
+import importlib
+import logging
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 #from sqlalchemy import create_engine
 #from sqlalchemy.orm import sessionmaker
 #   import MySQLdb #If future work for MySQL is wanted with database
@@ -20,14 +31,24 @@ import plotly.graph_objs as go
 app = Flask(__name__)
 
 # Define User Specific Variables
+appName = "RiskApp Tool"
 bkgrnd1 = "Department of Defense (DOD) software development issues drive cost overruns and delay in capability delivery Majority of DOD Major Defense Acquisition Programs (MDAPs) rely on software development to varying degrees ODASA-CE does not have reliable systems / tools available to conduct entity driven tradeoff analysis or risk assessment of software development projects"
 bkgrnd2d0 = "- No solution mimicking the DOD Architecture Framework (DODAF) is readily available"
 bkgrnd2d1 = "- No software or simulation based solution is readily available Objective: Develop, document, and deliver baseline model of Department of the Army (DA) software development teams in order to support"
 bkgrnd3 = "ODASA-CE analysis of projects including validation and verification (V/V) of program manager projections, staffing policy development, and interdependent processes exploration"
-poc1 = "Derek Eichin - Customer and Project Owner - Operations Research Analyst (ODASA)"
-poc2 = "Leo Pacatan - Product Owner, Contributor - Systems 699 Student - Biography:  Received a Bachelor of Science in Statistics with a minor in Business Administration from University of North Florida in May 2008.  Has worked as a Management Analyst for the Department of the Army for the past ten years, providing manpower and force management analysis on various major commands and their programs.  His Analyst work is comprised of building trend analysis, conducting studies, and developing models in determining required manpower strength.  Will complete a Master’s of Science in Operations Research with a concentration in Data Analytics from George Mason University in May 2019, along with a graduate certificate in Data Analytics."
-poc4 = "Trevor Jaskot - Developer, Contributor - Systems 699 Student - Biography:  Received a Bachelor of Science in Physics from George Mason University in May 2015.  I have worked with the government for 7 years, 5 as a contractor and 2 as a federal civilian. I am currently working for JPMorgan Chase as a Cloud Software Engineer in the Global Technology Organization. I specialize in large scale cloud platform development and have created 2 patents for JPMorgan. I consult with many third party vendors and work to continually expand on providing Customer Service to Developers and Clients across the firm. Most recently I have worked on an Identity and Authorization automation project whereby all platform Identity and Access is automatically integrated with Cyber Regulatory demands while in tandem being completely tokenized and abstracted to the end-user. Will complete a Master’s of Science in Systems Engineering (C4I) Concentration in Electrical Engineering from George Mason University in May 2019."
-poc3 = "Eric Jones - Stochastic Model Owner, Contributor - Systems 699 Student - Biography:  Received a Bachelor of Science in Civil Engineering with a certificate in advanced leadership studies from Texas A&M University in May 2015.  Most recently worked as an Operational Research Analyst at Systems Planning and Analysis, Inc. (SPA) for the past three years supporting decision-makers across a variety of government organizations including: Royal Australian Navy, Australian Defence Force, U.S. Navy N81 and N97, Office of Naval Research, DARPA, Department of Defense CIO, U.S. Coast Guard, and U.S. Pacific Command. This work spans the breadth of operations research tool sets in exploring trade-off analyses, informing requirements, and conducting performance assessments. Additionally, Eric is an Engineer in the U.S. Army Reserves. He will complete a Master’s of Science in Operations Research from George Mason University in May 2019."
+poc1 = "Derek"
+poc2 = "Leo"
+poc4 = "Trevor"
+poc3 = "Eric"
+
+app.logger.addHandler(logging.StreamHandler())
+app.logger.info("Initial Startup of: " + appName)
+
+@app.before_request
+def clear_trailing():
+    rp = request.path
+    if rp != '/' and rp.endswith('/'):
+        return redirect(rp[:-1])
 
 # Application Generated Routes
 @app.route('/')
@@ -41,7 +62,7 @@ def root():
     #    return url_redirect('/index')
     #else:
     #    return render_template('login.html', error=error)
-    #return redirect(url_for('login'))
+    #return redirect(url_for('.login', variable=variable))
     return render_template('login.html')
 
 @app.route('/login', methods=['GET','POST'])
@@ -73,12 +94,45 @@ def generate():
             return log_the_user_in(request.form['username'])
         else:
             error = "Invalid username/password"
-            return redirect(url_for('notfound.html', error=error))
+            return redirect(url_for('.not_found', error=error))
     return render_template('generate.html')
 
 @app.route('/contacts')
 #Syntax of python flask does not require variable from redirect to be passed into the below def function
 def contacts():
+    sendEmail = false
+    if [sendEmail == true]:
+        requestor = request.form['siteOwner']
+        #Change the string into list for list concatanation later in function
+        recipient = [requestor]
+        cc = ['trevor186@msn.com']
+        bcc = []
+        sender = 'myFlowerShop@outlook.com'
+        msg = MIMMultipart('alternative')
+        msg['Subject'] = 'Flower Info Request'
+        msg['From'] = sender
+        msg['To'] = ",".join(recipient)
+        msg['CC'] = ",".join(cc)
+        msg['BCC'] = ",".join(bcc)
+        recipient += cc + bcc
+        #More detail in e-mail content
+        email_body = None
+        email_body_header = ' '
+        email_body_header += '<html><head></head><body>'
+        email_body_header += '<style type="text/css"></style>'
+        email_body_header += '<br><h2>Hey</h2><p>Email Header</p><br><p>Requested Info:</p><br>'
+        email_body_content = ' '
+        email_body_content += '<p> + requestor + </p>'
+        email_body_footer = ' '
+        email_body_footer += '<br>Thank you.'
+        email_body_footer += '<br><p>R/</p><p>Flower Support</p><br>'
+        html = str(email_body_header) + str(email_body_content) + str(email_body_footer)
+        part = MIMEText(html, 'html')
+        msg.attach(part)
+        s = smtplib.SMTP('mailhost.flowershop.com')
+        s.sendmail(sender, recipient, msg.as_string())
+        s.quit()
+
     return render_template('contacts.html', poc1=poc1, poc2=poc2, poc3=poc3, poc4=poc4)
 
 @app.route('/about')
@@ -90,52 +144,6 @@ def datafunction():
     myVal = ""
     return myVal
 
-#This commented /generatesomethingelse app.route is for another call made from the javascript if an ajax call is wanted to post data anywhere for any purpose.
-#@app.routeasl;dkfj('/generatesomethingelse', methods=['POST'])
-#def genStuff():
-#    layout = {
-#        'xaxis': {
-#            'showticklabels': False,
-#            'showgrid': False,
-#            'zeroline': False,
-#        },
-#        'yaxis': {
-#            'showticklabels': False,
-#            'showgrid': False,
-#            'zeroline': False,
-#        },
-#        'shapes': [
-#            {
-#                'type': 'path',
-#                'path': 'M 0.235 0.5 L 0.24 0.65 L 0.245 0.5 Z',
-#                'fillcolor': 'rgba(44, 160, 101, 0.5)',
-#                'line': {
-#                    'width': 0.5
-#                },
-#                'xref': 'paper',
-#                'yref': 'paper'
-#            }
-#        ],
-#        'annotations': [
-#            {
-#                'xref': 'paper',
-#                'yref': 'paper',
-#                'x': 0.23,
-#                'y': 0.45,
-#                'text': '50',
-#                'showarrow': False
-#            }
-#        ]
-#    }
-#    # we don't want the boundary now
-#    base_chart['marker']['line']['width'] = 0
-#    
-#    fig = {"data": [base_chart, meter_chart],
-#           "layout": layout}
-#    py.iplot(fig, filename='gauge-meter-chart')
-#
-#    return render_template('pythonChart.html')
-
 #@app.route('/putValuesIntoDatabase', methods=['POST'])
 #def putDBValues():
 #    print('i want to set values in a database')
@@ -143,7 +151,7 @@ def datafunction():
 #    db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 #    #prepare a cursor object using cursor() method
 #    cursor = db.cursor()
-#    
+#
 #    #Prepare SQL query to INSERT a record into the database.
 #    sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
 #             LAST_NAME, AGE, INCOME)
@@ -157,7 +165,7 @@ def datafunction():
 #       # Rollback in case there is any error
 #       db.rollback()
 #    #disconnect from server
-#    db.close() 
+#    db.close()
 
 @app.errorhandler(404)
 def not_found(error):

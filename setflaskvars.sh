@@ -1,5 +1,12 @@
 #!/bin/bash
-
+read -p "Quick export? " qe
+if [[ $qe == 'y' ]]; then
+	export FLASK_APP='riskapp.py'
+	export FLASK_DEBUG=1
+	export FLASK_ENV=Development
+	flask run
+  exit 0
+fi
 read -p "What is your app name? (Ex: app.py) " appname
 echo "Exporting Flask App as ${appname}."
 export FLASK_APP=${appname}
@@ -9,7 +16,7 @@ if [[ ${bugmode} == 1 ]]; then
 	echo "I'm ENALBING Debug mode for flask."
 	export FLASK_DEBUG=1
 else
-	echo "I'm leaving debug mode OFF for now."	
+	echo "I'm leaving debug mode OFF for now."
 	export FLASK_DEBUG=0
 fi
 
@@ -44,7 +51,7 @@ while true; do
 			#			break;;
 			#		flask ) echo "I have set your env vars, starting flask."
 						flask run;
-			#			break;;
+						break;;
 			#	esac
 			#done;break;;
 		[Nn]* ) echo "Okay, please start the server before going to the localhost endpoint in your browser."; break;;
