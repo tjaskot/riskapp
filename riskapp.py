@@ -4,6 +4,7 @@
 # request
 # redirect
 # url_for
+# session
 # os
 # sys
 # plotly
@@ -13,9 +14,10 @@
 # collections
 # logging
 # importlib
+# markupsafe
 #########################
 
-from flask import Flask, render_template, request, url_for, redirect, jsonify, send_file
+from flask import Flask, render_template, request, url_for, redirect, jsonify, send_file, session
 import os, sys, plotly, json
 import chart_studio.plotly as py
 import plotly.graph_objects as go
@@ -24,6 +26,7 @@ import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+from markupsafe import escape
 #from sqlalchemy import create_engine
 #from sqlalchemy.orm import sessionmaker
 #   import MySQLdb #If future work for MySQL is wanted with database
@@ -32,10 +35,10 @@ app = Flask(__name__)
 
 # Define User Specific Variables
 appName = "RiskApp Tool"
-bkgrnd1 = "Department of Defense (DOD) software development issues drive cost overruns and delay in capability delivery Majority of DOD Major Defense Acquisition Programs (MDAPs) rely on software development to varying degrees ODASA-CE does not have reliable systems / tools available to conduct entity driven tradeoff analysis or risk assessment of software development projects"
-bkgrnd2d0 = "- No solution mimicking the DOD Architecture Framework (DODAF) is readily available"
-bkgrnd2d1 = "- No software or simulation based solution is readily available Objective: Develop, document, and deliver baseline model of Department of the Army (DA) software development teams in order to support"
-bkgrnd3 = "ODASA-CE analysis of projects including validation and verification (V/V) of program manager projections, staffing policy development, and interdependent processes exploration"
+bkgrnd1 = "Department of Defense (DOD)"
+bkgrnd2d0 = "- No solution mimicking"
+bkgrnd2d1 = "- No software or simulation"
+bkgrnd3 = "ODASA-CE analysis of projects"
 poc1 = "Derek"
 poc2 = "Leo"
 poc4 = "Trevor"
@@ -43,6 +46,8 @@ poc3 = "Eric"
 
 app.logger.addHandler(logging.StreamHandler())
 app.logger.info("Initial Startup of: " + appName)
+
+app.secret_key = 'myTestValue'
 
 @app.before_request
 def clear_trailing():
@@ -54,33 +59,40 @@ def clear_trailing():
 @app.route('/')
 def root():
     #Code to check the user session or browser cookie, otherwise redirect to login
-    #Session = sessionmaker(bind=engine)
-    #session = Session()
-    #user = User("admin","password")
-    #session.add(user)
-    #if (username = request.cookies.get('username')):
-    #    return url_redirect('/index')
-    #else:
-    #    return render_template('login.html', error=error)
-    #return redirect(url_for('.login', variable=variable))
-    return render_template('login.html')
+    if 'username' in session:
+        return 'Logged in as {}'.format(escape(session['username']))
+    return redirect(url_for('login'))
+    #return redirect(url_for('login'))#, variable=variable))
+    #return render_template('login.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    error = None
     if request.method == 'POST':
-        login = request.form['username']
-        password = request.form['password']
-        if login == "admin" and password == "admin":
-            return redirect(url_for('home'))
-        else:
-            error = "Incorrect Information. Please Try Again."
-            return render_template('login.html', error=error)
+        session['username'] = request.form['username']
+        return redirect(url_for('home'))
+    return '''
+        <form method='POST'>
+            <p><input type=text name=username></p>
+            <p><input type=submit value=Login></p>
+        </form>
+    '''
+    #    return render_template('login.html')
+
+        # Old code without session
+        #login = request.form['username']
+        #password = request.form['password']
+        #if login == "admin" and password == "admin":
+        #    return redirect(url_for('home'))
+        #else:
+        #    error = "Incorrect Information. Please Try Again."
+        #    return render_template('login.html', error=error)
+    #else:
+    #    return render_template('login.html')
 
 @app.route('/hello', methods=['GET'])
 # This route is simply to test api/visually the uri endpoint with status 200 if success
 def hello():
-    return "Hello this will provide a demonstration of the application. It will show you the projections for a sample set of data and provide you with instructions on how to generate your own relative data sets."
+    return "Return 200"
 
 @app.route('/home')
 def home():
@@ -177,6 +189,12 @@ def not_found(error):
     #    error = "This is my error."
     #    app.logger.error("Application is passing null into loginerror function.")
     return render_template('notfound.html'), 404
+
+@app.route('/logout')
+def logout():
+    # Remove user if ! in session
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 #Unit tests for application below (unit test code coverage +70%)
 #Validate that all url's are responsive and identify as themselves
