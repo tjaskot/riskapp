@@ -3,6 +3,8 @@ __pycache__
 bin/
 lib/
 env/
+env/*
+env/**/*
 pyvenv.cfg
 
 # Compiled Source #
@@ -10,6 +12,8 @@ pyvenv.cfg
 # Jupyter
 etc/
 share/
+share/*
+share/**/*
 
 # Packages #
 ############

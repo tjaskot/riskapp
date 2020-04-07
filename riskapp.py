@@ -63,7 +63,6 @@ def root():
         return 'Logged in as {}'.format(escape(session['username']))
     return redirect(url_for('login'))
     #return redirect(url_for('login'))#, variable=variable))
-    #return render_template('login.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -155,29 +154,6 @@ def about():
 def datafunction():
     myVal = ""
     return myVal
-
-#@app.route('/putValuesIntoDatabase', methods=['POST'])
-#def putDBValues():
-#    print('i want to set values in a database')
-#    #Open database connection
-#    db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
-#    #prepare a cursor object using cursor() method
-#    cursor = db.cursor()
-#
-#    #Prepare SQL query to INSERT a record into the database.
-#    sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
-#             LAST_NAME, AGE, INCOME)
-#             VALUES ('name', 'person', 20, 2000)"""
-#    try:
-#       # Execute the SQL command
-#       cursor.execute(sql)
-#       # Commit your changes in the database
-#       db.commit()
-#    except:
-#       # Rollback in case there is any error
-#       db.rollback()
-#    #disconnect from server
-#    db.close()
 
 @app.errorhandler(404)
 def not_found(error):
