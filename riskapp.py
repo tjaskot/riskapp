@@ -3,6 +3,7 @@
 # render_template
 # request
 # redirect
+# Blueprint
 # url_for
 # session
 # os
@@ -17,7 +18,7 @@
 # markupsafe
 #########################
 
-from flask import Flask, render_template, request, url_for, redirect, jsonify, send_file, session
+from flask import Flask, render_template, request, url_for, redirect, jsonify, send_file, session #TODO: , Blueprint
 import os, sys, plotly, json
 import chart_studio.plotly as py
 import plotly.graph_objects as go
@@ -27,11 +28,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from markupsafe import escape
-#from sqlalchemy import create_engine
-#from sqlalchemy.orm import sessionmaker
-#   import MySQLdb #If future work for MySQL is wanted with database
 
+#TODO: move to folder riskapp, rn using just app
+# riskapp = Blueprint('riskapp', __name__)
 app = Flask(__name__)
+
+#TODO: temp secret key
+app.secret_key = 'secret'
 
 # Define User Specific Variables
 appName = "RiskApp Tool"
@@ -44,10 +47,25 @@ poc2 = "Leo"
 poc4 = "Trevor"
 poc3 = "Eric"
 
-app.logger.addHandler(logging.StreamHandler())
-app.logger.info("Initial Startup of: " + appName)
-
-app.secret_key = 'myTestValue'
+# create logger
+#TODO: doubles out because of example.log
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+# set logging file output configuration
+#logger.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
+# create console handler and set level to debug
+consoleHandler = logging.StreamHandler()
+consoleHandler.setLevel(logging.DEBUG)
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# add formatter to consoleHandler
+consoleHandler.setFormatter(formatter)
+# add ch to logger
+logger.addHandler(consoleHandler)
+# log bsaic info
+logger.info("Initial Startup of: " + appName)
+logger.debug('This message should go to the log file')
+logger.warning('Warning: Test')
 
 @app.before_request
 def clear_trailing():
@@ -111,8 +129,8 @@ def generate():
 @app.route('/contacts')
 #Syntax of python flask does not require variable from redirect to be passed into the below def function
 def contacts():
-    sendEmail = false
-    if [sendEmail == true]:
+    sendEmail = 'false'
+    if sendEmail == 'true':
         requestor = request.form['siteOwner']
         #Change the string into list for list concatanation later in function
         recipient = [requestor]
@@ -152,7 +170,7 @@ def about():
 
 @app.route('/datafunction')
 def datafunction():
-    myVal = ""
+    myVal = "myDataValue"
     return myVal
 
 @app.errorhandler(404)
@@ -172,8 +190,9 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-#Unit tests for application below (unit test code coverage +70%)
-#Validate that all url's are responsive and identify as themselves
+### Unit tests ###
+# For application below (unit test code coverage +70%)
+# Validate that all url's are responsive and identify as themselves
 with app.test_request_context('/hello', method='GET'):
     #print(url_for(''))
     assert request.path == '/hello'
@@ -198,8 +217,11 @@ with app.test_request_context('/home'):
 
 with app.test_request_context('/datafunction'):
     assert request.path == '/datafunction'
+###################
 
-# If environment is needed by host, then define variables below
+#TODO: this should do in main.py, and riskapp.py should be a blueprint template folder app
+#   This file is being used as both main.py and riskapp.py and some overlap in init.py
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
+    #app.run works because __init__ created app object
     app.run(host='0.0.0.0', port=port)

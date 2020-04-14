@@ -1,1 +1,1 @@
-web: python riskapp.py
+web: flask run

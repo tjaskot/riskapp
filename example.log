@@ -1,0 +1,3 @@
+INFO:root:Initial Startup of: RiskApp Tool
+DEBUG:root:This message should go to the log file
+WARNING:root:Warning: Test
