@@ -1,0 +1,11 @@
+{% block users %}
+  {% for user in users %}
+    <h4>USER</h4>
+    <p>{{ user.id }}</p>
+    <p>{{ user.username }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.password }}</p>
+    <p>{{ user.created }}</p>
+    <p>{{ user.bio }}</p>
+  {% endfor %}
+{% endblock %}

@@ -8,6 +8,7 @@
 # session
 # os
 # sys
+# riskapp import views
 # plotly
 # email (mime)
 # jsonify
@@ -19,33 +20,90 @@
 #########################
 
 from flask import Flask, render_template, request, url_for, redirect, jsonify, send_file, session #TODO: , Blueprint
+from flask_login import LoginManager
+# Maybe figure out how to use postgres with heroku
+from flask_sqlalchemy import SQLAlchemy
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from markupsafe import escape
 import os, sys, plotly, json
 import chart_studio.plotly as py
 import plotly.graph_objects as go
 import importlib
 import logging
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
-from markupsafe import escape
+import views
+
 
 #TODO: move to folder riskapp, rn using just app
 # riskapp = Blueprint('riskapp', __name__)
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=False)
+
+# Define User Specific Variables - riskapp package
+appName = "RiskApp Tool"
+
+# Config db
+#r = FlaskRedis()
+#app.config[SQLALCHEMY_DATABASE_URI] = os.environ.get('DATABASE_URL')
+#app.config[SQLALCHEMY_TRACK_MODIFICATIONS] = False
+# Initalize db
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    """Model for user accounts."""
+    __tablename__ = 'flowerShopUsers'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), index=False, unique=True, nullable=False)
+    password = db.Column(db.String(50), index=False, nullable=False)
+    email = db.Column(db.String(80), index=True, unique=True, nullable=True)
+    created = db.Column(db.String(10), nullable=True) #DateTime, index=False, unique=False, nullable=True)
+    bio = db.Column(db.Text, index=False, unique=False, nullable=True)
+    #admin = db.Column(db.Boolean, index=False, unique=False, nullable=True)
+
+    def is_authenticated(self):
+        # if user is session.acive and session.auth = True:
+        return self.authenticated
+        # else:
+        #    return self.UNauthenticated
+
+    def __repr__(self):
+        return '<{},{}>'.format(self.id, self.username)
+
+    def __init__(self, username, password, email='noEmail', created='noDate', bio='noResponse'):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.created = created
+        self.bio = bio
+
+# Centralized approach - removes lazy loading, loads page as needed, cached page values
+app.add_url_rule('/', view_func=views.index)
+app.add_url_rule('/login', view_func=views.login, methods=['GET','POST'])
+app.add_url_rule('/hello', view_func=views.hello, methods=['GET'])
+app.add_url_rule('/home', view_func=views.home)
+app.add_url_rule('/generate', view_func=views.generate, methods=['POST', 'GET'])
+app.add_url_rule('/contacts', view_func=views.contacts)
+app.add_url_rule('/about', view_func=views.about)
+app.add_url_rule('/datafunction', view_func=views.datafunction)
+app.add_url_rule('/logout', view_func=views.logout)
+# app.add_url_rule('/users', view_func=views.users, methods=['GET','POST'])
+@app.route('/users', methods=['GET','POST'])
+def users():
+    if request.method == 'POST':
+        meUser = User(request.form['username'], 'myPassword', 'trevor186@msn.com', '4/17/20', 'myBio')
+        db.session.add(meUser)
+        db.session.commit()
+        return render_template('users.html', users=User.query.all())
+    else:
+        return ('''
+            <form method='POST'>
+                <p><input type=text name="username"></p>
+                <p><input type=submit value=Login></p>
+            </form>
+        ''')
 
 #TODO: temp secret key
 app.secret_key = 'secret'
-
-# Define User Specific Variables
-appName = "RiskApp Tool"
-bkgrnd1 = "Department of Defense (DOD)"
-bkgrnd2d0 = "- No solution mimicking"
-bkgrnd2d1 = "- No software or simulation"
-bkgrnd3 = "ODASA-CE analysis of projects"
-poc1 = "Derek"
-poc2 = "Leo"
-poc4 = "Trevor"
-poc3 = "Eric"
 
 # create logger
 #TODO: doubles out because of example.log
@@ -67,112 +125,15 @@ logger.info("Initial Startup of: " + appName)
 logger.debug('This message should go to the log file')
 logger.warning('Warning: Test')
 
+# reamins here for each load - don't know if correct, but seems right
 @app.before_request
 def clear_trailing():
     rp = request.path
+    logger.info(rp)
     if rp != '/' and rp.endswith('/'):
         return redirect(rp[:-1])
 
-# Application Generated Routes
-@app.route('/')
-def root():
-    #Code to check the user session or browser cookie, otherwise redirect to login
-    if 'username' in session:
-        return 'Logged in as {}'.format(escape(session['username']))
-    return redirect(url_for('login'))
-    #return redirect(url_for('login'))#, variable=variable))
-
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('home'))
-    return '''
-        <form method='POST'>
-            <p><input type=text name=username></p>
-            <p><input type=submit value=Login></p>
-        </form>
-    '''
-    #    return render_template('login.html')
-
-        # Old code without session
-        #login = request.form['username']
-        #password = request.form['password']
-        #if login == "admin" and password == "admin":
-        #    return redirect(url_for('home'))
-        #else:
-        #    error = "Incorrect Information. Please Try Again."
-        #    return render_template('login.html', error=error)
-    #else:
-    #    return render_template('login.html')
-
-@app.route('/hello', methods=['GET'])
-# This route is simply to test api/visually the uri endpoint with status 200 if success
-def hello():
-    return "Return 200"
-
-@app.route('/home')
-def home():
-    return render_template('index.html', bkgrnd1=bkgrnd1, bkgrnd2d0=bkgrnd2d0, bkgrnd2d1=bkgrnd2d1, bkgrnd3=bkgrnd3)
-
-@app.route('/generate', methods=['POST', 'GET'])
-def generate():
-    error = None
-    if request.method == 'POST':
-        if valid_login(request.form['username'], request.form['password']):
-            return log_the_user_in(request.form['username'])
-        else:
-            error = "Invalid username/password"
-            return redirect(url_for('.not_found', error=error))
-    return render_template('generate.html')
-
-@app.route('/contacts')
-#Syntax of python flask does not require variable from redirect to be passed into the below def function
-def contacts():
-    sendEmail = 'false'
-    if sendEmail == 'true':
-        requestor = request.form['siteOwner']
-        #Change the string into list for list concatanation later in function
-        recipient = [requestor]
-        cc = ['trevor186@msn.com']
-        bcc = []
-        sender = 'myFlowerShop@outlook.com'
-        msg = MIMMultipart('alternative')
-        msg['Subject'] = 'Flower Info Request'
-        msg['From'] = sender
-        msg['To'] = ",".join(recipient)
-        msg['CC'] = ",".join(cc)
-        msg['BCC'] = ",".join(bcc)
-        recipient += cc + bcc
-        #More detail in e-mail content
-        email_body = None
-        email_body_header = ' '
-        email_body_header += '<html><head></head><body>'
-        email_body_header += '<style type="text/css"></style>'
-        email_body_header += '<br><h2>Hey</h2><p>Email Header</p><br><p>Requested Info:</p><br>'
-        email_body_content = ' '
-        email_body_content += '<p> + requestor + </p>'
-        email_body_footer = ' '
-        email_body_footer += '<br>Thank you.'
-        email_body_footer += '<br><p>R/</p><p>Flower Support</p><br>'
-        html = str(email_body_header) + str(email_body_content) + str(email_body_footer)
-        part = MIMEText(html, 'html')
-        msg.attach(part)
-        s = smtplib.SMTP('mailhost.flowershop.com')
-        s.sendmail(sender, recipient, msg.as_string())
-        s.quit()
-
-    return render_template('contacts.html', poc1=poc1, poc2=poc2, poc3=poc3, poc4=poc4)
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/datafunction')
-def datafunction():
-    myVal = "myDataValue"
-    return myVal
-
+# remains here for all error loading - this works!
 @app.errorhandler(404)
 def not_found(error):
     ##Checks to see if error is null, and catches exception
@@ -183,12 +144,6 @@ def not_found(error):
     #    error = "This is my error."
     #    app.logger.error("Application is passing null into loginerror function.")
     return render_template('notfound.html'), 404
-
-@app.route('/logout')
-def logout():
-    # Remove user if ! in session
-    session.pop('username', None)
-    return redirect(url_for('index'))
 
 ### Unit tests ###
 # For application below (unit test code coverage +70%)
@@ -222,6 +177,6 @@ with app.test_request_context('/datafunction'):
 #TODO: this should do in main.py, and riskapp.py should be a blueprint template folder app
 #   This file is being used as both main.py and riskapp.py and some overlap in init.py
 if __name__ == "__main__":
+    db.create_all()
     port = int(os.environ.get("PORT", 5000))
-    #app.run works because __init__ created app object
     app.run(host='0.0.0.0', port=port)

@@ -15,9 +15,6 @@ class Config:
 
 
 
-
-
-
 ### Copied Code ###
 #base directory for sqlalchemy database file
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -27,12 +24,6 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-### app/__init__.py ###
-from flask import Flask
-from config import Config
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -69,16 +60,6 @@ class Post(db.Model):
 
 
 
-
-### app.py ###
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
-
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -86,3 +67,5 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+print("REACHED CONFIG")
