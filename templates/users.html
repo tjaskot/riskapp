@@ -1,4 +1,4 @@
-{% block users %}
+<!-- {% block users %}
   {% for user in users %}
     <h4>USER</h4>
     <p>{{ user.id }}</p>
@@ -8,4 +8,37 @@
     <p>{{ user.created }}</p>
     <p>{{ user.bio }}</p>
   {% endfor %}
-{% endblock %}
+{% endblock %} -->
+
+<!DOCTYPE html>
+<html lang = "en">
+   <head></head>
+   <body>
+      <h3>
+         <a href = "{{ url_for('users') }}">Comments - Flask SQLAlchemy example</a>
+      </h3>
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+      <h3>Users (<a href = "{{ url_for('signup') }}">Add User</a>)</h3>
+
+      <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for user in users %}
+               <tr>
+                  <td>{{ user.username }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+
+   </body>
+</html>

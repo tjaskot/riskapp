@@ -44,8 +44,11 @@ appName = "RiskApp Tool"
 
 # Config db
 #r = FlaskRedis()
-#app.config[SQLALCHEMY_DATABASE_URI] = os.environ.get('DATABASE_URL')
-#app.config[SQLALCHEMY_TRACK_MODIFICATIONS] = False
+if 'Production' in os.environ:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initalize db
 db = SQLAlchemy(app)
 
@@ -53,11 +56,12 @@ class User(db.Model):
     """Model for user accounts."""
     __tablename__ = 'flowerShopUsers'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), index=False, unique=True, nullable=False)
-    password = db.Column(db.String(50), index=False, nullable=False)
-    email = db.Column(db.String(80), index=True, unique=True, nullable=True)
-    created = db.Column(db.String(10), nullable=True) #DateTime, index=False, unique=False, nullable=True)
-    bio = db.Column(db.Text, index=False, unique=False, nullable=True)
+    username = db.Column(db.String(30), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+    # TODO: Unique - if email blank, then false, else if email filled, then true
+    email = db.Column(db.String(80), nullable=True)
+    created = db.Column(db.String(10), nullable=True) #DateTime, unique=False, nullable=True)
+    bio = db.Column(db.Text, unique=False, nullable=True)
     #admin = db.Column(db.Boolean, index=False, unique=False, nullable=True)
 
     def is_authenticated(self):
@@ -89,18 +93,39 @@ app.add_url_rule('/logout', view_func=views.logout)
 # app.add_url_rule('/users', view_func=views.users, methods=['GET','POST'])
 @app.route('/users', methods=['GET','POST'])
 def users():
+    # TODO: wont need this post method
     if request.method == 'POST':
         meUser = User(request.form['username'], 'myPassword', 'trevor186@msn.com', '4/17/20', 'myBio')
         db.session.add(meUser)
         db.session.commit()
         return render_template('users.html', users=User.query.all())
     else:
-        return ('''
-            <form method='POST'>
-                <p><input type=text name="username"></p>
-                <p><input type=submit value=Login></p>
-            </form>
-        ''')
+        return render_template('users.html', users=User.query.all())
+        #return redirect(url_for('signup', users=User.query.all()))
+        # ('''
+        #     <form method='POST'>
+        #         <p><input type=text name="username"></p>
+        #         <p><input type=submit value=Login></p>
+        #     </form>
+        # ''')
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    if request.method == 'POST':
+      if not request.form['username'] or not request.form['password']:
+          flash('Please enter all the fields', 'error')
+      else:
+          # TODO: try:
+          users = User(request.form['username'], request.form['password'], request.form['email'])
+          db.session.add(users)
+          db.session.commit()
+          return redirect(url_for('users'))
+    return render_template('signup.html')
+    # if request.method == 'POST':
+    #     newUser = User(request.form['username'])
+    #     db.session.add(newUser)
+    #     db.session.commit()
+    #     return(True)
 
 #TODO: temp secret key
 app.secret_key = 'secret'

@@ -71,13 +71,6 @@ def generate():
             return redirect(url_for('.not_found', error = error))
     return render_template('generate.html')
 
-def signup():
-    if request.method == 'POST':
-        newUser = User(request.form['username'])
-        db.session.add(newUser)
-        db.session.commit()
-        return(True)
-    return render_template('signup.html')
 
 #@app.route('/contacts')
 #Syntax of python flask does not require variable from redirect to be passed into the below def function

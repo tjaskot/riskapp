@@ -11,7 +11,6 @@
   </head>
   <body>
     <title>PageNotFound</title>
-    <p>Something went awry, please try again. If situation persists, please contact system administrator.</p>
     <!-- This is the navigation bar -->
     <ul>
             <li><a href="/home">Home</a></li>
@@ -23,8 +22,11 @@
             <li><a href="/about">About</a></li>
     </ul>
     <!-- end of navbar -->
+    <article>
+      <p>Something went awry, please try again. If situation persists, please contact system administrator.</p>
+    </article>
   </body>
-  
+
   <!-- The reason the author uses a url_for static resource instead of relative path for js as in html style not based on Flask is to ensure that the javascript is loaded after the initial window.pageload. The result is that the div's will be organized in proper order with proper parent/child scope inheritance. -->
   <script type="text/javascript" src={{ url_for('static', filename='js/notfound.js') }}></script>
   <script type="text/javascript" src={{ url_for('static', filename='js/common.js') }}></script>
