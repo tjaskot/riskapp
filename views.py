@@ -13,7 +13,7 @@ poc3 = "Eric"
 # Application Generated Routes
 #@app.route('/')
 def index():
-    #Code to check the user session or browser cookie, otherwise redirect to login
+    # TODO: Need to update for if session is active, then redirect for home?
     if 'username' in session:# and db.query.filter_by('id') != 'admin':
         return 'Logged in as {}'.format(session['username'])
     elif 'username' is 'admin':
@@ -21,38 +21,9 @@ def index():
         db.query.filter_by('password')
         return 'logged in'
     return redirect(url_for('login'))
-    #return redirect(url_for('login'))#, variable=variable))
-
-#@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        userName = request.form['username']
-        session['username'] = userName
-        # db.session.add(userName)
-        # db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('login.html')
-    # '''
-    #     <form method='POST'>
-    #         <p><input type=text name=username></p>
-    #         <p><input type=submit value=Login></p>
-    #     </form>
-    # '''
-    #    return render_template('login.html')
-
-        # Old code without session
-        #login = request.form['username']
-        #password = request.form['password']
-        #if login == "admin" and password == "admin":
-        #    return redirect(url_for('home'))
-        #else:
-        #    error = "Incorrect Information. Please Try Again."
-        #    return render_template('login.html', error=error)
-    #else:
-    #    return render_template('login.html')
 
 #@app.route('/hello', methods=['GET'])
-# This route is simply to test api/visually the uri endpoint with status 200 if success
+#Stay-Alive verification
 def hello():
     return "Return 200"
 
@@ -119,8 +90,7 @@ def datafunction():
     myVal = "myDataValue"
     return myVal
 
-#@app.route('/logout')
-def logout():
-    # Remove user if ! in session
-    session.pop('username', None)
-    return redirect(url_for('index'))
+#@app.route('/unauthorized')
+# TODO: next step to add pass in object that returns "hey <user> you're not auth"
+def unauthorized():
+    return "Hey gotta figure out how to login :)"
