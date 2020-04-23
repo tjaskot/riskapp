@@ -14,6 +14,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
 import os, sys, plotly, json
 import chart_studio.plotly as py
 import plotly.graph_objects as go
@@ -70,15 +71,30 @@ def load_user(user_id):
 def unauthorized():
     return redirect(url_for('unauthorized'))
 
-# Config db
+# App Configs
 #r = FlaskRedis()
 if 'production' in os.environ:
+    app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=14)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 else:
+    app.config['REMEMBER_COOKIE_DURATION'] = timedelta(seconds=300)
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///memory"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 # Initalize db
 db = SQLAlchemy(app)
+
+class Config:
+     # General Config
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    FLASK_APP = os.environ.get('FLASK_APP')
+    FLASK_ENV = os.environ.get('FLASK_ENV')
+    FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
+
+    # Database
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
 
 class User(UserMixin, db.Model):
     """Model for user accounts."""
@@ -90,6 +106,22 @@ class User(UserMixin, db.Model):
     created = db.Column(db.String(10), nullable=True) #DateTime, unique=False, nullable=True)
     bio = db.Column(db.Text, unique=False, nullable=True)
     #admin = db.Column(db.Boolean, index=False, unique=False, nullable=True)
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password, method='sha256')
+
+    def check_password(self, password):
+        return check_password(self.password, password)
+
+    def validate_username(self, username):
+        validUser = User.query.filter_by(username=username.data).first()
+        if validUser is not None:
+            error = "User is not valid"
+
+    def validate_email(self, email):
+        validEmail = User.query.filter_by(email=email.data).first()
+        if validEmail is not None:
+            error = "Email is not valid"
 
     def __repr__(self):
         return '<{},{}>'.format(self.id, self.username)
@@ -117,15 +149,10 @@ def login():
     if request.method == 'POST':
         userFormName = request.form['username']
         session['username'] = userFormName
+        # Uses the session for username passing rather than in url or directly in html
         login_user(User.query.filter_by(username=userFormName).first())
         return redirect(url_for('home'))
     return render_template('login.html')
-    # '''
-    #     <form method='POST'>
-    #         <p><input type=text name=username></p>
-    #         <p><input type=submit value=Login></p>
-    #     </form>
-    # '''
 
 # app.add_url_rule('/users', view_func=views.users, methods=['GET','POST'])
 @app.route('/users', methods=['GET','POST'])
