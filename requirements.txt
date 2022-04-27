@@ -15,7 +15,7 @@ docopt==0.6.2
 gunicorn==19.9.0
 idna==2.9
 itsdangerous==1.1.0
-numpy==1.16.2
+numpy==1.21.0
 pipreqs==0.4.9
 plotly==4.6.0
 requests==2.23.0
